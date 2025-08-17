@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
 const countries = [
-  { name: 'USA', currency: 'USD' },
-  { name: 'Uk', currency: 'GBP' },
-  { name: 'Canada', currency: 'CAD' },
-  { name: 'European Union', currency: 'EUR' },
-  { name: 'Japan', currency: 'JPY' },
-  { name: 'India', currency: 'INR' },
-  { name: 'Australia', currency: 'AUD' },
-  { name: 'China', currency: 'CNY' },
+  { name: 'USA', currency: 'USD' ,currencyIcon:"$",multiple:1},
+  { name: 'Uk', currency: 'GBP' ,currencyIcon:"#",multiple:1},
+  { name: 'Canada', currency: 'CAD' ,currencyIcon:"%",multiple:1},
+  { name: 'European Union', currency: 'EUR' ,currencyIcon:"&",multiple:1},
+  { name: 'Japan', currency: 'JPY' ,currencyIcon:"%",multiple:1},
+  { name: 'India', currency: 'INR' ,currencyIcon:"*",multiple:1},
+  { name: 'Australia', currency: 'AUD' ,currencyIcon:"*",multiple:1},
+  { name: 'China', currency: 'CNY' ,currencyIcon:"!",multiple:1},
 ];
 
 const CountryCurrencyDropdown = ({ onSelect }) => {

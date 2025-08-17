@@ -4,12 +4,16 @@ import { Search } from 'lucide-react'
 import CountryCurrencyDropdown from './CountryCurrencyDropdown'
 
 function Navbar() {
+    const handelcountry = (country) =>{
+        console.log(country)
+    }
+
   return (
     <div>
         <nav className="flex justify-evenly bg-slate-300 text-5xl items-center">
             <a className="navbar-brand" href="#">XPURE</a>
             <div className =' text-xl'>
-            <CountryCurrencyDropdown  />
+            <CountryCurrencyDropdown onSelect={handelcountry} />
             </div>
             <div className='flex w-1/2 justify-center gap-2 p-3 items-center'>
             <input 
