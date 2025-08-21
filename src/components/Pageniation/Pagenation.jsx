@@ -1,37 +1,27 @@
-import React,{createContext, useContext,useState} from 'react'
-import { DollarSign,Euro, EuroIcon } from "lucide-react";
-import CurrencyContext from '../../context/context';
+import React, { useState } from "react";
 
-import productList from '../Data'
-import useCurrency from '../../context/context';
+const items = Array.from({ length: 50 }, (_, i) => `Item ${i + 1}`);
 
-function Mainpage() {
+const Pagination = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9;
+  const itemsPerPage = 5;
 
   // calculate indexes
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = productList.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
 
   // total pages
-  const totalPages = Math.ceil(productList.length / itemsPerPage);
+  const totalPages = Math.ceil(items.length / itemsPerPage);
+
+  return (
+    <div className="p-4">
+      
 
   
-  const {multiple,icon} = useContext(CurrencyContext)
-  return (
-    <div className=' h-auto'>
-    <div className='bg-slate-300 flex gap-16 p-4 flex-wrap w-4/5 justify-center h-auto'>
-        {currentItems.map((ele,index)=>(
-            <div key={index} className='text-center w-1/4'>
-                <img src={ele.image} alt="" />
-                <h1 >{ele.name}</h1>
-                <h1>{Math.floor(ele.price * multiple)} {icon}</h1> 
-            </div>
-        ))}
 
-    </div>
-    <div className="flex gap-2 m-auto my-4 w-96">
+      {/* Pagination buttons */}
+     <div className="flex gap-2">
         <button
           className="px-3 py-1 border rounded disabled:opacity-50"
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
@@ -61,7 +51,7 @@ function Mainpage() {
         </button>
       </div> 
     </div>
-  )
-}
+  );
+};
 
-export default Mainpage
+export default Pagination;

@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
+import CurrencyContext from '../../context/context';
+
 
 const countries = [
-  { name: 'USA', currency: 'USD' ,currencyIcon:"$",multiple:1},
-  { name: 'Uk', currency: 'GBP' ,currencyIcon:"#",multiple:1},
-  { name: 'Canada', currency: 'CAD' ,currencyIcon:"%",multiple:1},
-  { name: 'European Union', currency: 'EUR' ,currencyIcon:"&",multiple:1},
-  { name: 'Japan', currency: 'JPY' ,currencyIcon:"%",multiple:1},
-  { name: 'India', currency: 'INR' ,currencyIcon:"*",multiple:1},
-  { name: 'Australia', currency: 'AUD' ,currencyIcon:"*",multiple:1},
-  { name: 'China', currency: 'CNY' ,currencyIcon:"!",multiple:1},
+  { name: 'USA', currency: 'USD', currencyIcon: '$', multiple: 1 },
+  { name: 'UK', currency: 'GBP', currencyIcon: '£', multiple: 1.3523 },
+  { name: 'Canada', currency: 'CAD', currencyIcon: 'C$', multiple: 1.38 },
+  { name: 'European Union', currency: 'EUR', currencyIcon: '€', multiple: 1.1682 },
+  { name: 'Japan', currency: 'JPY', currencyIcon: '¥', multiple: 147.83 },
+  { name: 'India', currency: 'INR', currencyIcon: '₹', multiple: 83 },          // approximate
+  { name: 'Australia', currency: 'AUD', currencyIcon: 'A$', multiple: 0.6479 },
+  { name: 'China', currency: 'CNY', currencyIcon: '¥', multiple: 7.1824 },
 ];
+
 
 const CountryCurrencyDropdown = ({ onSelect }) => {
   const [selected, setSelected] = useState(null);
 
+  const {SetMultiple,SetIcon} = useContext(CurrencyContext)
+
   const handleSelect = (country) => {
     setSelected(country);
+    // console.log(country);
+    SetIcon(country.currencyIcon)
+    SetMultiple(country.multiple)
+    
     if (onSelect) onSelect(country);
   };
 

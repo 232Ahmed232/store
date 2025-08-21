@@ -3,7 +3,7 @@ import RangeSlider from './Range'
 
 function Sidebar() {
     return (
-        <div className='flex flex-col bg-slate-300 h-screen mt-4 w-1/6'  >
+        <div className='flex flex-col bg-slate-300 h-screen mt-4 w-2/3'  >
             <div className='ml-4 my-4'>
                 <h2 className='text-xl font-bold'>Categories</h2>
                 <div className='flex gap-2 items-center'>
