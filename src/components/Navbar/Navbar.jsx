@@ -1,5 +1,6 @@
 import React,{useContext} from 'react'
 import CartIcon from './CartIcon'
+import { NavLink ,Link} from 'react-router-dom';
 
 import CurrencyContext from "../../context/context";
 
@@ -18,7 +19,7 @@ function Navbar() {
   return (
     <div>
         <nav className="flex justify-evenly bg-slate-300 text-5xl items-center">
-            <a className="navbar-brand" href="#">XPURE</a>
+            <Link className="navbar-brand" to={'/'}>XPURE</Link>
             <div className =' text-xl'>
             <CountryCurrencyDropdown onSelect={handelcountry} />
             </div>
@@ -32,9 +33,9 @@ function Navbar() {
             </button>
             </div>
 
-            <button onClick={()=> console.log(cart)}>
+            <NavLink to={`/carts/${((cart.length)?cart:"nothing")}`}>
                 <CartIcon count={cart.length}/>
-            </button>
+            </NavLink>
         </nav>
     </div>
   )
