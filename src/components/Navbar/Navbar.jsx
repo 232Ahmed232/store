@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React,{useContext, useState} from 'react'
 import CartIcon from './CartIcon'
 import { NavLink ,Link} from 'react-router-dom';
 
@@ -9,10 +9,15 @@ import CountryCurrencyDropdown from './CountryCurrencyDropdown'
 
 function Navbar() {
 
-    const { cart} = useContext(CurrencyContext);
+    const [search,setSearch] = useState("")
+    const { cart,setSearchVal} = useContext(CurrencyContext);
 
-    const handelcountry = (country) =>{
-        console.log(country)
+    const handelsearch = () =>{
+       setSearchVal(search)
+    }
+
+    const handelcountry = (country)=>{
+
     }
 
 
@@ -25,10 +30,11 @@ function Navbar() {
             </div>
             <div className='flex w-1/2 justify-center gap-2 p-3 items-center'>
             <input 
+                onChange={(e) => setSearch(e.target.value)}
                 type="text" 
-
+                value={search}
                 />
-            <button type='submit'> 
+            <button  onClick={handelsearch}> 
                 <Search className=" bg-slate-100 h-16 w-16 hover:text-white hover:bg-black text-gray-600" />
             </button>
             </div>
