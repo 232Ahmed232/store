@@ -12,6 +12,8 @@ import Pagination from './components/Pageniation/Pagenation'
 
 function App() {
 
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedBrands, setSelectedBrands] = useState([]);
 
 
 
@@ -19,8 +21,8 @@ function App() {
     <CurrencyProvider >
      <Navbar/>
      <div className='flex items-center justify-center gap-2 m-2'>
-     <Sidebar/>
-     <Mainpage />
+     <Sidebar onCategoryChange={setSelectedCategories} onBrandChange={setSelectedBrands}/>
+      <Mainpage selectedCategories={selectedCategories} selectedBrands={selectedBrands}/>
      </div>
      {/* <Pagination/> */}
     </CurrencyProvider>

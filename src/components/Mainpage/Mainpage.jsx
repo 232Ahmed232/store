@@ -1,37 +1,72 @@
-import React,{createContext, useContext,useState} from 'react'
-import { DollarSign,Euro, EuroIcon } from "lucide-react";
-import CurrencyContext from '../../context/context';
+import React, { useContext, useEffect, useState,useMemo } from "react";
+import CurrencyContext from "../../context/context";
+import productList from "../Data";
 
-import productList from '../Data'
-import useCurrency from '../../context/context';
+function Mainpage({ selectedCategories , selectedBrands}) {
 
-function Mainpage() {
+  const { multiple, icon ,min,max,setCart} = useContext(CurrencyContext);
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
 
-  // calculate indexes
+  const showProducts = useMemo(() => {
+    let filtered = productList;
+
+    // filter by categories
+    if (selectedCategories.length) {
+      filtered = filtered.filter((ele) =>
+        selectedCategories.includes(ele.category)
+      );
+    }
+
+    // filter by brands
+    if (selectedBrands.length) {
+      filtered = filtered.filter((ele) =>
+        selectedBrands.includes(ele.brand)
+      );
+    }
+
+    // convert price according to currency and filter by price range
+    filtered = filtered
+      .map((ele) => ({
+        ...ele,
+        convertedPrice: Math.floor(ele.price * multiple),
+      }))
+      .filter((ele) => ele.convertedPrice > min && ele.convertedPrice < max);
+
+    return filtered;
+  }, [selectedCategories, selectedBrands, multiple, min, max]);
+
+  // pagination
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = productList.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = showProducts.slice(indexOfFirstItem, indexOfLastItem);
 
-  // total pages
-  const totalPages = Math.ceil(productList.length / itemsPerPage);
+  const totalPages = Math.ceil(showProducts.length / itemsPerPage);
 
   
-  const {multiple,icon} = useContext(CurrencyContext)
-  return (
-    <div className=' h-auto'>
-    <div className='bg-slate-300 flex gap-16 p-4 flex-wrap w-4/5 justify-center h-auto'>
-        {currentItems.map((ele,index)=>(
-            <div key={index} className='text-center w-1/4'>
-                <img src={ele.image} alt="" />
-                <h1 >{ele.name}</h1>
-                <h1>{Math.floor(ele.price * multiple)} {icon}</h1> 
-            </div>
-        ))}
 
-    </div>
-    <div className="flex gap-2 m-auto my-4 w-96">
+  return (
+    <div className="h-auto">
+      <div className="bg-slate-300 flex gap-16 p-4 flex-wrap w-4/5 justify-center h-auto">
+        {currentItems.map((ele, index) => (
+          <div key={index} className="text-center w-1/4">
+            <img src={ele.image} alt="" />
+            <h1>{ele.name}</h1>
+            <h1>
+              {Math.floor(ele.price * multiple)} {icon}
+            </h1>
+            <button 
+            onClick={()=> setCart((prev) => [...prev, ele])}
+            className=" bg-slate-400 px-4 py-1 rounded-xl hover:bg-black hover:text-white"
+            >
+              Add to Cart</button>
+          </div>
+        ))}
+      </div>
+
+      {/* pagination */}
+      <div className="flex gap-2 m-auto my-4 w-96">
         <button
           className="px-3 py-1 border rounded disabled:opacity-50"
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
@@ -59,9 +94,9 @@ function Mainpage() {
         >
           Next
         </button>
-      </div> 
+      </div>
     </div>
-  )
+  );
 }
 
-export default Mainpage
+export default Mainpage;

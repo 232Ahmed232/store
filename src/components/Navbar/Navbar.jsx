@@ -1,12 +1,19 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import CartIcon from './CartIcon'
+
+import CurrencyContext from "../../context/context";
+
 import { Search } from 'lucide-react'
 import CountryCurrencyDropdown from './CountryCurrencyDropdown'
 
 function Navbar() {
+
+    const { cart} = useContext(CurrencyContext);
+
     const handelcountry = (country) =>{
         console.log(country)
     }
+
 
   return (
     <div>
@@ -25,8 +32,8 @@ function Navbar() {
             </button>
             </div>
 
-            <button>
-                <CartIcon count={5}/>
+            <button onClick={()=> console.log(cart)}>
+                <CartIcon count={cart.length}/>
             </button>
         </nav>
     </div>

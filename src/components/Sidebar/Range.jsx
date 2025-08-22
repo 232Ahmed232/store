@@ -1,23 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
+import CurrencyContext from "../../context/context";
 
-const RangeSlider = ({ min = 0, max = 1000, step = 10 }) => {
+
+const RangeSlider = ({ min = 0, max = 3000, step = 10 }) => {
+
+  const {  icon,SetMin,SetMax } = useContext(CurrencyContext);
+
+
     const [minVal, setMinVal] = useState(min);
     const [maxVal, setMaxVal] = useState(max);
   
     const handleMinChange = (e) => {
       const val = Math.min(Number(e.target.value), maxVal - step);
       setMinVal(val);
+      SetMin(val)
     };
   
     const handleMaxChange = (e) => {
       const val = Math.max(Number(e.target.value), minVal + step);
       setMaxVal(val);
+      SetMax(val)
     };
+
+
   
     return (
       <div className="w-full max-w-md">
         <label className="block mb-2 text-sm font-medium text-gray-700">
-          Price Range: <span className="font-bold">${minVal}</span> - <span className="font-bold">${maxVal}</span>
+          Price Range: <span className="font-bold">{icon}{minVal}</span> - <span className="font-bold">{icon}{maxVal}</span>
         </label>
   
         <div className="relative h-6">
@@ -57,8 +67,8 @@ const RangeSlider = ({ min = 0, max = 1000, step = 10 }) => {
         </div>
   
         <div className="flex justify-between text-sm text-gray-600 mt-2">
-          <span>${min}</span>
-          <span>${max}</span>
+          <span>{icon} {min}</span>
+          <span>{icon} {max}</span>
         </div>
       </div>
     );
