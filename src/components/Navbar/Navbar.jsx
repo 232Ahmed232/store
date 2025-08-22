@@ -12,8 +12,9 @@ function Navbar() {
     const [search,setSearch] = useState("")
     const { cart,setSearchVal} = useContext(CurrencyContext);
 
-    const handelsearch = () =>{
-       setSearchVal(search)
+    const handelsearch = (e) =>{
+        setSearch(e.target.value)
+       setSearchVal(e.target.value)
     }
 
     const handelcountry = (country)=>{
@@ -30,11 +31,11 @@ function Navbar() {
             </div>
             <div className='flex w-1/2 justify-center gap-2 p-3 items-center'>
             <input 
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={handelsearch}
                 type="text" 
                 value={search}
                 />
-            <button  onClick={handelsearch}> 
+            <button  onClick={()=>setSearchVal(search)}> 
                 <Search className=" bg-slate-100 h-16 w-16 hover:text-white hover:bg-black text-gray-600" />
             </button>
             </div>

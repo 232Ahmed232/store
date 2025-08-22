@@ -8,9 +8,11 @@ const CurrencyProvider = ({children}) =>{
     const[min,SetMin] = useState(0)
     const[max,SetMax] = useState(5000)
     const [cart,setCart] = useState([])
+    const [searchVal,setSearchVal] = useState("")
+
     return(
     
-    <CurrencyContext.Provider value={{icon,SetIcon,multiple,SetMultiple,min,max,SetMin,SetMax,cart,setCart}}>
+    <CurrencyContext.Provider value={{icon,SetIcon,multiple,SetMultiple,min,max,SetMin,SetMax,cart,setCart,searchVal,setSearchVal}}>
         {children}
     </CurrencyContext.Provider>
     )

@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState,useMemo } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import CurrencyContext from "../../context/context";
 import productList from "../Data";
 
-function Mainpage({ selectedCategories , selectedBrands}) {
+function Mainpage({ selectedCategories, selectedBrands }) {
 
-  const { multiple, icon ,min,max,setCart} = useContext(CurrencyContext);
+  const { multiple, icon, min, max, setCart, searchVal } = useContext(CurrencyContext);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
@@ -33,9 +33,20 @@ function Mainpage({ selectedCategories , selectedBrands}) {
         convertedPrice: Math.floor(ele.price * multiple),
       }))
       .filter((ele) => ele.convertedPrice > min && ele.convertedPrice < max);
+    
+
+    if (searchVal.length>0) {
+
+      filtered = filtered.filter((ele) => {
+        const value = searchVal.toLowerCase()
+        let name = ele.name.toLowerCase()
+
+        return searchVal && name.includes(value)
+      })
+    }
 
     return filtered;
-  }, [selectedCategories, selectedBrands, multiple, min, max]);
+  }, [selectedCategories, selectedBrands, multiple, min, max,searchVal]);
 
   // pagination
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -44,7 +55,7 @@ function Mainpage({ selectedCategories , selectedBrands}) {
 
   const totalPages = Math.ceil(showProducts.length / itemsPerPage);
 
-  
+
 
   return (
     <div className="h-auto">
@@ -56,9 +67,9 @@ function Mainpage({ selectedCategories , selectedBrands}) {
             <h1>
               {Math.floor(ele.price * multiple)} {icon}
             </h1>
-            <button 
-            onClick={()=> setCart((prev) => [...prev, ele])}
-            className=" bg-slate-400 px-4 py-1 rounded-xl hover:bg-black hover:text-white"
+            <button
+              onClick={() => setCart((prev) => [...prev, ele])}
+              className=" bg-slate-400 px-4 py-1 rounded-xl hover:bg-black hover:text-white"
             >
               Add to Cart</button>
           </div>
@@ -78,9 +89,8 @@ function Mainpage({ selectedCategories , selectedBrands}) {
         {Array.from({ length: totalPages }, (_, i) => (
           <button
             key={i}
-            className={`px-3 py-1 border rounded ${
-              currentPage === i + 1 ? "bg-blue-500 text-white" : ""
-            }`}
+            className={`px-3 py-1 border rounded ${currentPage === i + 1 ? "bg-blue-500 text-white" : ""
+              }`}
             onClick={() => setCurrentPage(i + 1)}
           >
             {i + 1}
